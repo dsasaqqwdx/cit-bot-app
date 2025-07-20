@@ -4,3 +4,7 @@ oauth2client
 pyngrok
 twilio
 gunicorn
+google-auth
+google-auth-httplib2
+google-auth-oauthlib
+
