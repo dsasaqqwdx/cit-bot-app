@@ -1,16 +1,18 @@
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+from google.oauth2.service_account import Credentials
 
 app = Flask(__name__)
 
-scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+# Google Sheets Auth
+scope = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
+creds = Credentials.from_service_account_file('credentials.json', scopes=scope)
 client = gspread.authorize(creds)
 sheet = client.open('Chit_Fund_Records').sheet1
 
 
+# Payment Function
 def add_payment(name, month, amount, paid):
     sheet.append_row([name, month, str(amount), paid])
 
